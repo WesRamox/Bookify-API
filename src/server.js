@@ -1,11 +1,12 @@
 const express = require("express")
+const router = require("./router")
 
 const app = express()
-const router = ("./router")
-
 
 app.use(express.json())
-
 app.use(router)
 
-app.listen(3000)
+
+app.listen(process.env.PORT, () => {
+  console.log("Servidor iniciado")
+})
