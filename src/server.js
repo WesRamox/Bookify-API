@@ -5,9 +5,6 @@ const router = require("./router")
 
 const app = express()
 
-// models
-const Book = require("./models/Book");
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
