@@ -31,7 +31,7 @@ router.post("/book", async (req, res) => {
 
     await book.save()
 
-    res.status(201).json({ message: "Sucess: Book was created" });
+    res.status(201).json({ message: "Success: Book was created" });
   } catch (error) {
     res.status(500).json({ error: "Error ", details: error.message });
   }
@@ -59,6 +59,34 @@ router.get("/book/:id", async (req, res) => {
   }
 });
 
+// (PUT /book/:id): Envia os novos dados para atualizar.
+router.put("/book/:id", async (req, res) => {
+  try {
+    const { id } = req.params
+    const { name, author } = req.body
+
+    // Verificar se o ID é válido antes de tentar a busca
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+
+    // Verifica se o Book desejado foi encontrado no banco de dados
+    const book = await Book.findById(id);
+
+    if (!book) {
+      return res.status(404).json({ message: "Warning: Book not found, please try with another ID" });
+    }
+
+    const updatedBook = { name, author }
+
+    res.status(200).json({ message: "Success: Book updated with success" })
+
+    return await Book.replaceOne(book, updatedBook)
+  } catch (error) {
+    res.status(500).json({ error: "Error", details: error.message });
+  }
+})
+
 // (GET /books): Retorna todos os livros
 router.get("/books", async (req, res) => {
   try {
@@ -70,9 +98,8 @@ router.get("/books", async (req, res) => {
   }
 });
 
-// (PUT /books/:id): Envia os novos dados para atualizar.
 
-// (DELETE /books/:id): Remove o livro.
+// (DELETE /book/:id): Remove o livro.
 
 
 
