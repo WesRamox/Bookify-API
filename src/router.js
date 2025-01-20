@@ -6,7 +6,7 @@ const router = express.Router()
 const Book = require("./models/Book")
 
 router.get("/", (req, res) => {
-  res.json({ message: "Bem-vindo à API!" })
+  res.json({ message: "Bem-vindo à API Bookify!" })
 });
 
 // (POST /book): Adiciona um novo livro. { name, author, date }
@@ -87,6 +87,26 @@ router.put("/book/:id", async (req, res) => {
   }
 })
 
+// (DELETE /book/:id): Remove o livro.
+router.delete("/book/:id", async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const book = await Book.findById(id)
+
+    if (!book) {
+      return res.status(404).json({ message: "Warning: Book not found, please try with another ID" });
+    }
+
+    await Book.deleteOne(book)
+
+    res.status(200).json({ message: "Success: Book has been deleted successfully" })
+  } catch (error) {
+    res.status(500).json({ error: "Error", details: error.message });
+  }
+})
+
+
 // (GET /books): Retorna todos os livros
 router.get("/books", async (req, res) => {
   try {
@@ -97,9 +117,6 @@ router.get("/books", async (req, res) => {
     res.status(500).json({ error: "Error: ", details: error });
   }
 });
-
-
-// (DELETE /book/:id): Remove o livro.
 
 
 
