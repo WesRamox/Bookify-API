@@ -3,11 +3,11 @@ const mongoose = require("mongoose")
 const router = express.Router()
 
 // Models
-const Book = require("./models/Book")
+const Book = require("../models/Book")
 
 router.get("/", (req, res) => {
   res.json({ message: "Bem-vindo à API Bookify!" })
-});
+});-
 
 // (POST /book): Adiciona um novo livro. { name, author, date }
 router.post("/book", async (req, res) => {

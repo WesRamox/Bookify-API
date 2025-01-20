@@ -1,14 +1,18 @@
 require('dotenv').config();
 const express = require("express")
 const mongoose = require("mongoose")
-const router = require("./router")
+
+// Importando as rotas
+const bookRoutes = require("./router/book");
+const userRoutes = require("./router/user");
 
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use(router)
+app.use(bookRoutes); // Rotas de livros
+app.use(userRoutes); // Rotas de usuários
 
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASS;
