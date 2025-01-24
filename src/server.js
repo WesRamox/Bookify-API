@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require("express")
 const mongoose = require("mongoose")
+const cors = require('cors')
 
 // Importando as rotas
 const bookRoutes = require("./router/book");
@@ -8,6 +9,7 @@ const userRoutes = require("./router/user");
 
 const app = express()
 
+app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
